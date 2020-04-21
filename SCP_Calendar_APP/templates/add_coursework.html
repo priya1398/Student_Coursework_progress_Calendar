@@ -1,0 +1,232 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Student Progress Calendar System{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'css/CSS.css' %}">
+  
+  
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+</head>
+<body>
+
+  <hr>
+
+ 
+
+<div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+
+       <a href="#"> <div id="close-sidebar" align="right" style="font-size:22px;">
+          <i class="fas fa-times"></i>
+        </div> </a>
+      <div class="sidebar-brand"  style="font-size: 30px; color:white;">
+
+       SCP <i class=" fa fa-hourglass-half"> Calendar</i> 
+        
+      </div>
+      <div class="sidebar-header">
+      
+        <div class="user-info">
+          <span class="user-name">
+            <strong> {{ request.user.username }}  </strong>
+          </span>
+         
+        
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+    
+   
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li >
+            <a href="/professor/">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+             
+            </a>
+            
+              
+          </li>
+            <li >
+            <a href="/events/">
+              <i class="fa fa-book"></i>
+              <span>Courseworks</span>
+             
+            </a>
+           
+          </li>
+       
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+   
+      <a href="/">
+        <i class="fa fa-power-off"> Logout </i>
+      </a>
+    </div>
+  </nav>
+  <!-- sidebar-wrapper  -->
+  <main class="page-content">
+  {% block content %}
+  <div>
+  <section >
+    <header>
+      <h2>ADD TO STUDENT'S CALENDAR</h2>
+      <h4>Welcome  {{ request.user.username }}!</h4>
+    </header>
+     <h3 style="font-family:Times New Roman, Times, serif; color:#FDAB43;"> View Student's Calendar : <a class=" btninfor " href="/calendar/" >  Calendar </a></h3>
+     
+ 
+    <div class="login">
+  <form action="/create" class="login-form">
+{% for message in messages %}
+<div class="alert alert-fail" style=" font-size: 26px; color:red; ">
+        {{ message }}
+      </div>
+       {% endfor %}
+
+                {%  csrf_token %}
+            <label class="form-group" for="title">Course Code: </label>
+            <input class="form-control" type="text" name="Course_Code" required><br>
+
+            <label class="form-group" for="Course">Course: </label>
+            <input class="form-control" type="text" name="Course" required><br>
+
+            <label class="form-group" for="CW">CW: </label>
+            <input class="form-control" type="number" name="CW" required><br>
+
+            <label class="form-group" for="title">Title: </label>
+            <input class="form-control" type="text" name="title" required><br>
+
+            <label class="form-group" for="Description">Description (Enter File URL): </label>
+            <input class="form-control" type="text" name="Description" required><br>
+
+            <label class="form-group" for="start">Start: </label>
+            <input class="form-control" type="datetime-local" name="start"required><br>
+
+            <label class="form-group" for="end">End: </label>
+            <input class="form-control" type="datetime-local" name="end" required><br>
+           
+            <input class="btn btn-success" type="submit" value="Create">
+
+
+        </form>
+ </section>
+  
+</div>
+<!-- <button id="e1">Login error!</button> -->
+{% endblock %}
+</div>
+
+  </main>
+  <!-- page-content" -->
+</div>
+<!-- page-wrapper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    
+</body>
+
+</html>
+
+<!-- <div class="body"></div>
+    <div class="grad"></div>
+    <div class="header">
+      <div>Site<span>Random</span></div>
+    </div>
+    <br>
+ -->
+<!--   <div class="login-dark"> -->
+
+
+  <!-- <p>Welcome {{ request.user.username }} !</p>
+ 
+        <p>User Details:</p>
+ 
+        <ul>
+            <li>Email: {{ request.user.username.email|default:"NA" }}</li>
+            <li>SuperUser: {{ request.user.is_superuser }}</li>
+            <li>Staff: {{ request.user.is_staff }}</li>
+            <li>Date Joined: {{ request.user.date_joined }}</li>
+            <li>Last Login: {{ request.user.last_login }}</li>
+            <li>Last Login: {{ request.user.profID }}</li>
+        </ul>
+  -->
+
+ <!--  
+    <script type="text/javascript">
+      var form = document.getElementById('login');
+var buttonE1 = document.getElementById('e1');
+
+buttonE1.addEventListener('click', function () {
+  form.classList.add('error_1');
+  setTimeout(function () {
+    form.classList.remove('error_1');
+  }, 3000);
+});
+    </script> -->
+ <script type="text/javascript">
+  jQuery(function ($) {
+
+    $(".sidebar-dropdown > a").click(function() {
+  $(".sidebar-submenu").slideUp(200);
+  if (
+    $(this)
+      .parent()
+      .hasClass("active")
+  ) {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .parent()
+      .removeClass("active");
+  } else {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .next(".sidebar-submenu")
+      .slideDown(200);
+    $(this)
+      .parent()
+      .addClass("active");
+  }
+});
+
+$("#close-sidebar").click(function() {
+  $(".page-wrapper").removeClass("toggled");
+});
+$("#show-sidebar").click(function() {
+  $(".page-wrapper").addClass("toggled");
+});
+
+
+   
+   
+});
+ </script>
+  
+</body>
+</html>

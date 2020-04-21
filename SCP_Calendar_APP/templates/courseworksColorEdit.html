@@ -1,0 +1,357 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Student Coursework Progress Calendar{% endblock %}</title>
+
+<link rel="stylesheet" href="{% static 'css/CSS.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+
+<style>
+    .bs-example{
+        margin: 50px; 
+        width: 100%; 
+        background-color: 
+
+    }
+      .container-fluid{width: 1000px;}
+.card-body{box-shadow: 10px 10px;
+padding: 70px;
+width: 100%;
+  height: 100%;
+}
+
+
+
+</style>
+
+<style>
+
+
+
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #000;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+
+ .divL {
+      display: inline-block;
+      box-sizing: border-box;
+      width: 49%;
+      padding: 10px;
+      margin: 0;
+    }
+
+</style>
+</head>
+<body>
+
+  <hr>
+
+ 
+
+<div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+     <a href="#"> <div id="close-sidebar" align="right" style="font-size:22px;">
+          <i class="fas fa-times"></i>
+        </div> </a>
+      <div class="sidebar-brand">
+
+        <img src="{% static 'logo.png' %}" width="200px" />
+        
+      </div>
+      <div class="sidebar-header">
+      
+        <div class="user-info">
+          <span class="user-name">
+            <strong> {{ request.user.username }}</strong>
+          </span>
+         
+          <span class="user-status">
+            <i class="fa fa-circle"></i>
+            <span>Online</span>
+          </span>
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+    
+   
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li >
+            <a href="/student/">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+             
+            </a>
+          </li>
+
+           <li >
+            <a href="/calendar/">
+              <i class="fa fa-calendar"></i>
+              <span>Calendar</span>
+             
+            </a>
+            
+              
+          </li>
+
+            
+               <li >
+            <a href="/studentAdd/">
+              <i class="fa fa-plus"></i>
+              <span>Add To Calendar</span>
+             
+            </a>
+            
+              
+          </li>
+
+         
+           
+            <li >
+            <a href="/deadline/">
+              <i class="fa fa-clock"></i>
+              <span>Deadline</span>
+             
+            </a>
+            
+              
+          </li>
+
+
+      
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+  
+      <a href="/">
+        <i class="fa fa-power-off">  Logout</i>
+      </a>
+    </div>
+  </nav>
+  <!-- sidebar-wrapper  -->
+  <main class="page-content">
+<h3 align="center" style="color: #f0ad4e;">COLOUR CODE YOUR COURSEWORKS</h3> 
+
+  <div class="bs-example">
+
+    <div class="container-fluid">
+
+     
+
+        <!-- Card sizing using grid markup -->
+        <div class="row mb-4">
+             {% for l in events %}
+             {% if l.Course_Code != "" %}
+            <div class="col-sm-6">
+           
+                <div class="card">
+                    <div class="card-body">
+                      
+                        <h5 class="card-title">{{l.Course_Code}}</h5> <button style="background:{{l.color}}"> </button>
+                        <p class="card-text">{{l.Course}}</p>
+                        <p class="card-text">CW: {{l.CW}}</p>
+
+                        <button style="background: #337ab7;" > <a href="/add_color/{{l.id }}" style="color:black;" >Add Colour</a></button>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+           {% endfor %}
+      
+
+        
+    </div>
+</div>
+<br>
+<br>
+<hr>
+
+
+<div style="text-align:center;border:1px solid orange;">
+   
+
+ <button>  Submissions Today:{% for alerts in alerts %} {{alerts.alerts}} {% endfor %} </button>
+
+    
+      
+
+     <div class="bs-example">
+
+    <div class="container-fluid">
+
+     
+
+        <!-- Card sizing using grid markup -->
+        <div class="row mb-4">
+              {% for alerts in courseworks %}
+            <div class="col-sm-6">
+           
+                <div class="card">
+                    <div class="card-body">
+                      
+                        <h5 class="card-title">{{alerts.Course_Code}}</h5> </button>
+                        <p class="card-text"> Course:  {{alerts.Course}} <br> CW:{{alerts.CW}} <br>  Title: {{alerts.title}} 
+           </p>
+
+                       <!--  <button style="background: #337ab7;" > <a href="/add_color/{{l.id }}" style="color:black;" >Add Colour</a></button> -->
+                        
+                    </div>
+                </div>
+            </div>
+         
+         {% endfor %}
+
+        
+    </div>
+
+ </div>
+</div>
+
+ 
+  </main>
+  <!-- page-content" -->
+</div>
+<!-- page-wrapper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    
+</body>
+
+</html>
+
+ <script type="text/javascript">
+  jQuery(function ($) {
+
+    $(".sidebar-dropdown > a").click(function() {
+  $(".sidebar-submenu").slideUp(200);
+  if (
+    $(this)
+      .parent()
+      .hasClass("active")
+  ) {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .parent()
+      .removeClass("active");
+  } else {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .next(".sidebar-submenu")
+      .slideDown(200);
+    $(this)
+      .parent()
+      .addClass("active");
+  }
+});
+
+$("#close-sidebar").click(function() {
+  $(".page-wrapper").removeClass("toggled");
+});
+$("#show-sidebar").click(function() {
+  $(".page-wrapper").addClass("toggled");
+});
+
+
+   
+   
+});
+ </script>
+  
+</body>
+</html>

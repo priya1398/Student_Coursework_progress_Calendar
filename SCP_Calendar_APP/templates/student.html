@@ -1,0 +1,296 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Student Coursework Progress Calendar{% endblock %}</title>
+
+<link rel="stylesheet" href="{% static 'css/CSS.css' %}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+
+<style>
+    .bs-example{
+        margin: 50px; 
+        width: 100%; 
+        background-color: 
+
+    }
+      .container-fluid{width: 1000px;}
+.card-body{box-shadow: 10px 10px;
+padding: 70px;
+width: 100%;
+  height: 100%;
+}
+
+
+
+</style>
+
+<style>
+
+
+
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #000;
+  border: 2px solid #06D85F;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #06D85F;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+</style>
+</head>
+<body>
+
+  <hr>
+
+ 
+
+<div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+  <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+     <a href="#"> <div id="close-sidebar" align="right" style="font-size:22px;">
+          <i class="fas fa-times"></i>
+        </div> </a>
+      <div class="sidebar-brand"  style="font-size: 30px; color:white;">
+
+       SCP <i class=" fa fa-hourglass-half"> Calendar</i> 
+        
+      </div>
+      <div class="sidebar-header">
+      
+        <div class="user-info">
+          <span class="user-name">
+            <strong> {{ request.user.username }}</strong>
+          </span>
+         
+         
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+    
+   
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li >
+            <a href="/student/">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+             
+            </a>
+          </li>
+
+           <li >
+            <a href="/calendar/">
+              <i class="fa fa-calendar"></i>
+              <span>Calendar</span>
+             
+            </a>
+            
+              
+          </li>
+
+            
+               <li >
+            <a href="/studentAdd/">
+              <i class="fa fa-plus"></i>
+              <span>Add To Calendar</span>
+             
+            </a>
+            
+              
+          </li>
+
+         
+           
+            <li >
+            <a href="/deadline/">
+              <i class="fa fa-clock"></i>
+              <span>Deadline</span>
+             
+            </a>
+            
+              
+          </li>
+
+
+      
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+  
+      <a href="/">
+        <i class="fa fa-power-off">  Logout</i>
+      </a>
+    </div>
+  </nav>
+  <!-- sidebar-wrapper  -->
+  <main class="page-content">
+
+          <!-- Button trigger modal -->
+<button type="button"  data-toggle="modal" data-target="#exampleModal">
+  Submissions Today:{% for alerts in alerts %} {{alerts.alerts}} {% endfor %} 
+</button>
+<h3 align="center" style="color: #f0ad4e;"> CUSTOMIZE YOUR COURSEWORKS COLORS</h3> 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Submissions Today:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {% for alerts in courseworks %}
+        Course:  {{alerts.Course}} <br> CW:{{alerts.CW}} <br>  Title: {{alerts.title}} <br> <br>
+        {% endfor %}
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<hr>
+
+
+
+  <div class="bs-example">
+
+    <div class="container-fluid">
+
+     
+
+        <!-- Card sizing using grid markup -->
+        <div class="row mb-4">
+             {% for l in events %}
+             {% if l.Course_Code != "" %}
+            <div class="col-sm-6">
+           
+                <div class="card">
+                    <div class="card-body">
+                      
+                        <h5 class="card-title">{{l.Course_Code}}</h5> <button style="background:{{l.color}}"> </button>
+                        <p class="card-text">{{l.Course}}</p>
+                        <p class="card-text">CW: {{l.CW}}</p>
+
+                        <button style="background: #337ab7;" > <a href="/add_color/{{l.id }}" style="color:black;" >Set Colour</a></button>
+                        
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+           {% endfor %}
+      
+
+        
+    </div>
+</div>
+
+
+
+  </main>
+  <!-- page-content" -->
+</div>
+<!-- page-wrapper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    
+</body>
+
+</html>
+
+ <script type="text/javascript">
+  jQuery(function ($) {
+
+    $(".sidebar-dropdown > a").click(function() {
+  $(".sidebar-submenu").slideUp(200);
+  if (
+    $(this)
+      .parent()
+      .hasClass("active")
+  ) {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .parent()
+      .removeClass("active");
+  } else {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .next(".sidebar-submenu")
+      .slideDown(200);
+    $(this)
+      .parent()
+      .addClass("active");
+  }
+});
+
+$("#close-sidebar").click(function() {
+  $(".page-wrapper").removeClass("toggled");
+});
+$("#show-sidebar").click(function() {
+  $(".page-wrapper").addClass("toggled");
+});
+
+
+   
+   
+});
+ </script>
+
+
+  
+</body>
+</html>

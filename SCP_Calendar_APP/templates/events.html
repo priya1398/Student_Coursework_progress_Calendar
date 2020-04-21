@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Student Coursework Progress Calendar{% endblock %}</title>
+
+  <link rel="stylesheet" href="{% static 'css/CSS.css' %}">
+  
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+   
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<style>
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #fff;
+}
+th{
+  background-color: #000;
+  color:#fff;
+  font-size: 20px;
+
+}
+
+td{font-size: 18px;}
+th, td {
+  text-align: left;
+  padding: 8px;
+
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+</style>
+</head>
+<body>
+
+  <hr>
+
+ 
+
+<div class="page-wrapper chiller-theme toggled">
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+ <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+     <a href="#"> <div id="close-sidebar" align="right" style="font-size:22px;">
+          <i class="fas fa-times"></i>
+        </div> </a>
+      <div class="sidebar-brand"  style="font-size: 30px; color:white;">
+
+       SCP <i class=" fa fa-hourglass-half"> Calendar</i> 
+        
+      </div>
+      <div class="sidebar-header">
+      
+        <div class="user-info">
+          <span class="user-name">
+            <strong> {{ request.user.username }}</strong>
+          </span>
+         
+         
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+    
+   
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li >
+            <a href="/professor/">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+             
+            </a>
+          </li>
+
+           <li >
+            <a href="/events/">
+              <i class="fa fa-book"></i>
+              <span>Courseworks</span>
+             
+            </a>
+            
+              
+          </li>
+
+            
+
+      
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+  
+      <a href="/">
+        <i class="fa fa-power-off">  Logout</i>
+      </a>
+    </div>
+  </nav>
+  <!-- sidebar-wrapper  -->
+ <main class="page-content">
+     
+  
+
+<div style="overflow-x:auto;">
+
+  <table id="example" class="table table-striped table-bordered" style="width:100%">
+    <tr>
+      <th>Course</th>
+      <th>Title</th>
+      <th>CW</th>
+      <th>Tasks</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Edit Coursework</th>
+      <th>Add Colour</th>
+     
+    </tr>
+    {% for l in events %}
+             {% if l.Course_Code != "" %}
+    <tr>
+      <td>{{l.Course_Code}} - {{l.Course}}</td>
+      <td>{{l.title}}</td>
+      <td>{{l.CW}}</td>
+      <td>{{l.PART}}</td>
+      <td>{{l.start}}</td>
+      <td>{{l.end}}</td>
+      <td><button > <a href="/edit/{{ l.id }}" style="color:black;" >Edit Coursework</a></button></td>
+      <td><button style="background: #5bc0de;" > <a href="/edit_task/{{ l.id }}" style="color:black;" >Add Task</a></button></td>
+      
+    </tr>
+
+       
+                  {% endif %}
+           {% endfor %}
+  </table>
+</div>
+
+</main>
+  <!-- page-content" -->
+</div>
+<!-- page-wrapper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    
+
+
+ <script type="text/javascript">
+  jQuery(function ($) {
+
+    $(".sidebar-dropdown > a").click(function() {
+  $(".sidebar-submenu").slideUp(200);
+  if (
+    $(this)
+      .parent()
+      .hasClass("active")
+  ) {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .parent()
+      .removeClass("active");
+  } else {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .next(".sidebar-submenu")
+      .slideDown(200);
+    $(this)
+      .parent()
+      .addClass("active");
+  }
+});
+
+$("#close-sidebar").click(function() {
+  $(".page-wrapper").removeClass("toggled");
+});
+$("#show-sidebar").click(function() {
+  $(".page-wrapper").addClass("toggled");
+});
+
+
+   
+   
+});
+ </script>
+  
+</body>
+</html>
