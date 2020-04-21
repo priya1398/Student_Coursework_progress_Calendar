@@ -1,0 +1,15 @@
+create database scpc;
+use scpc;
+
+
+/* The command below shows empty command as the migrations are not made yet */
+
+
+show tables;
+
+
+/* After migrations are applied  */
+
+show tables;
+insert into crud_teacher_courses values(1, 'Computer Science'.'4', 'F20BD','Big Data Management');
+insert into crud_teacher_courses values(2, 'Computer Science'.'4', 'F28DM','Data Management System');
