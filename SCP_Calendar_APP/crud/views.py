@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.core import serializers
 from django.db.models import DurationField, F, ExpressionWrapper
 import datetime
-from .models import BookList,Event,teacher_courses,students_courses
+from .models import Event,teacher_courses,students_courses
 
 from django.shortcuts import render, redirect
 from django.core import serializers
