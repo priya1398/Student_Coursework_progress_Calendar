@@ -1,0 +1,475 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+
+
+  <title>
+   Student Coursework Progress Calendar
+  </title>
+
+<link rel="stylesheet" href="{% static 'css/CSS.css' %}">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+
+  <style>
+
+
+
+#formButton {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+
+}
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+#formButton:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+    html, body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 100%;
+ background: rgb(230,255,252);
+background: linear-gradient(90deg, rgba(230,255,252,1) 0%, rgba(254,245,220,1) 100%);
+
+}
+
+
+    #calendar1{
+      max-width: 100%;
+      margin: 40px auto;
+      
+   
+    }
+    
+.fc-bgevent {
+ 
+  background: #8fdf82;
+  opacity: .3; }
+
+
+
+
+.fc-title {
+  font-size: 16px !important; 
+  color:white;
+}
+
+.fc-center h2 {
+ font-size: 22px; 
+ color: #00c983;
+ font-weight: 400;
+}
+
+
+
+.fc-start{ background-image: linear-gradient(
+    0deg,
+    rgba(255,255,255,0.3)0%,
+    rgba(255,255,255,0.3)100%);}
+.fc-end{  background-image: linear-gradient(
+    0deg,
+    rgba(0,0,0,0.3)0%,
+    rgba(0,0,0,0.3)100%);}
+
+
+
+
+    .fc-fri , .fc-sat{ background-image: linear-gradient(45deg, #ffffff 25%, #d8dadb 25%, #d8dadb 50%, #ffffff 50%, #ffffff 75%, #d8dadb 75%, #d8dadb 100%);
+background-size: 22.63px 22.63px;}
+
+
+
+    /*.fc .fc-content { background-color: #000; }*/
+
+  </style>
+
+
+
+
+
+
+<link href='https://unpkg.com/@fullcalendar/core@4.4.0/main.min.css' rel='stylesheet' />
+
+
+  <link href='https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.css' rel='stylesheet' />
+
+
+<link href='https://unpkg.com/@fullcalendar/timegrid@4.4.0/main.min.css' rel='stylesheet' />
+
+  <link href='https://unpkg.com/@fullcalendar/list@4.4.0/main.min.css' rel='stylesheet' />
+
+ 
+
+
+<script src='/assets/demo-to-codepen.js'></script>
+
+<script src='https://unpkg.com/@fullcalendar/core@4.4.0/main.min.js'></script>
+
+
+
+
+  <script src='https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.js'></script>
+
+  <script src='https://unpkg.com/@fullcalendar/timegrid@4.4.0/main.min.js'></script>
+
+  <script src='https://unpkg.com/@fullcalendar/list@4.4.0/main.min.js'></script>
+
+
+  <script src='https://unpkg.com/@fullcalendar/google-calendar@4.4.0/main.min.js'></script>
+
+  
+<style>
+
+
+
+.cellBg {
+    background: #000;
+    color: #fff;
+}
+
+</style>
+
+
+<script src="//www.amcharts.com/lib/4/core.js"></script>
+<script src="//www.amcharts.com/lib/4/themes/animated.js"></script>
+
+
+
+
+<style>
+/*Main CSS*/
+
+
+/*Login Signup Page*/
+a:focus,a:hover,a{
+    outline:none;
+    text-decoration: none;
+}
+li,ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.header-top i {
+    font-size: 18px;
+}
+
+.alert {
+  padding: 20px;
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+ </style>
+
+
+  
+ <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{% static 'almanac_calendar/moment.min.js' %}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js"></script> 
+
+
+    
+
+
+<script type="text/javascript">
+
+document.addEventListener('DOMContentLoaded', function() {
+
+
+  var calendarEl = document.getElementById('calendar1');
+
+
+  var calendar1 = new FullCalendar.Calendar(calendarEl, {
+    plugins: [ 'dayGrid', 'list' ],
+    defaultView: 'dayGridMonth',
+    header: {
+        left: 'prev,next today',
+        center:'title',
+      // center: 'addEventButton',
+      right: 'dayGridMonth,dayGridWeek,listMonth'
+    },
+      eventLimit: false, 
+ 
+      displayEventTime: false,
+
+      // navLinks: true,
+      businessHours:  {
+      daysOfWeek: [ 0,1, 2, 3, 4 ],
+      },// Monday - Thursday, // display business hours
+
+   eventClick: function(info) {
+        var eventObj = info.event;
+
+        if (eventObj.url) {
+          alert(
+            'Deadline  ' + '\n'  + eventObj.end + '.\n' +  '\n' +
+            'Will open the description of the coursework in a new tab :'  + '\n.'  + eventObj.url 
+          );
+
+          window.open(eventObj.url);
+
+          info.jsEvent.preventDefault(); // prevents browser from following link in current tab.
+        } else {
+          alert('Clicked ' + eventObj.title);
+        }
+      },
+
+
+    
+eventOrder:'end',
+
+      events:  [
+                {% for l in events %}
+                     {
+                
+
+                      
+                        {% if l.Course_Code == "" %}
+                        title: '{{l.title}}',
+                        start: '{{ l.start }}',
+                        color:'{{ l.color }}',
+                        {% endif %}
+
+                        {% if l.Course_Code != "" %}
+                        title: '{{l.Course_Code }}-> CW: {{l.CW}} ',
+                        start: '{{ l.start }}',
+                        end: '{{ l.end }}',
+                        color:'{{ l.color }}',
+                        url: '{{ l.Description }}',
+                        {% endif %}
+                        
+
+                        
+
+                        
+
+                        // url:'/calendar/event'+'{{l.id}}',
+                         allDay: false,
+  editable: false,
+          
+                      
+                    },
+
+               
+                  
+                {% endfor %}
+
+               
+            ] ,
+
+
+
+    
+  });
+
+
+  calendar1.render();
+});
+
+
+</script>
+
+</head>
+
+  
+<body>
+
+<div class="page-wrapper chiller-theme toggled" >
+  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
+    <i class="fas fa-bars"></i>
+  </a>
+ <nav id="sidebar" class="sidebar-wrapper">
+    <div class="sidebar-content">
+     <a href="#"> <div id="close-sidebar" align="right" style="font-size:22px;">
+          <i class="fas fa-times"></i>
+        </div> </a>
+      <div class="sidebar-brand"  style="font-size: 30px; color:white;">
+
+       SCP <i class=" fa fa-hourglass-half"> Calendar</i> 
+        
+      </div>
+      <div class="sidebar-header">
+      
+        <div class="user-info">
+          <span class="user-name">
+            <strong> {{ request.user.username }}</strong>
+          </span>
+         
+         
+        </div>
+      </div>
+      <!-- sidebar-header  -->
+    
+   
+      <div class="sidebar-menu">
+        <ul>
+          <li class="header-menu">
+            <span>General</span>
+          </li>
+          <li >
+            <a href="/student/">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+             
+            </a>
+          </li>
+
+           <li >
+            <a href="/calendar/">
+              <i class="fa fa-calendar"></i>
+              <span>Calendar</span>
+             
+            </a>
+            
+              
+          </li>
+
+            
+               <li >
+            <a href="/studentAdd/">
+              <i class="fa fa-plus"></i>
+              <span>Add To Calendar</span>
+             
+            </a>
+            
+              
+          </li>
+
+         
+           
+            <li >
+            <a href="/deadline/">
+              <i class="fa fa-clock"></i>
+              <span>Deadline</span>
+             
+            </a>
+            
+              
+          </li>
+
+
+      
+      </div>
+      <!-- sidebar-menu  -->
+    </div>
+    <!-- sidebar-content  -->
+    <div class="sidebar-footer">
+  
+      <a href="/">
+        <i class="fa fa-power-off">  Logout</i>
+      </a>
+    </div>
+  </nav>
+
+    <main class="page-content" style="background: rgb(230,255,252);
+background: linear-gradient(90deg, rgba(230,255,252,1) 0%, rgba(254,245,220,1) 100%);">
+
+
+
+ <div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <strong>Info!</strong>   The coursework's color gets darker when the dealine is closer and the weekend is highligted in grey.   
+</div> 
+  <div id='calendar1' ></div>
+<div id=colors></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+</main>
+
+
+
+
+
+
+        <script type="text/javascript">
+          jQuery(function ($) {
+
+    $(".sidebar-dropdown > a").click(function() {
+  $(".sidebar-submenu").slideUp(200);
+  if (
+    $(this)
+      .parent()
+      .hasClass("active")
+  ) {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .parent()
+      .removeClass("active");
+  } else {
+    $(".sidebar-dropdown").removeClass("active");
+    $(this)
+      .next(".sidebar-submenu")
+      .slideDown(200);
+    $(this)
+      .parent()
+      .addClass("active");
+  }
+});
+
+$("#close-sidebar").click(function() {
+  $(".page-wrapper").removeClass("toggled");
+});
+$("#show-sidebar").click(function() {
+  $(".page-wrapper").addClass("toggled");
+});
+
+
+   
+   
+});
+        </script>
+
+       
+
+
+</body>
+
+</html>
