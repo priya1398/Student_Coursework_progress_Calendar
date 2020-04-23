@@ -30,10 +30,12 @@ cd Desktop\Student_Coursework_progress_Calendar-master\SCP_Calendar_APP
 •	python manage.py makemigrations
 •	python manage.py migrate
 •	Insert table values in MySQL 5.5 command line client 
+
+
+
 show tables;
- 
-insert into crud_teacher_courses values(1, 'Computer Science'.'4', 'F20BD','Big Data Management');
-insert into crud_teacher_courses values(2, 'Computer Science'.'4', 'F28DM','Data Management System');
+insert into crud_teacher_courses values(1, 'Computer Science','4', 'F20BD','Big Data Management');
+insert into crud_teacher_courses values(2, 'Computer Science','4', 'F28DM','Data Management System');
 
 •	Back to Command Prompt-> python manage.py createsuperuser
 Set:
